@@ -1,0 +1,18 @@
+name: Pre-Commit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  preCommit:
+    name: Pre-Commit
+    runs-on: eks
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Execute pre-commit
+        # Run all pre-commit checks on max version supported
+        run: pre-commit run -a --color=always --show-diff-on-failure --all-files
