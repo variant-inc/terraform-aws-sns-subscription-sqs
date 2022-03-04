@@ -15,11 +15,6 @@ variable "topic_name" {
   default     = null
 }
 
-variable "name_prefix" {
-  description = "A unique name beginning with the specified prefix."
-  type        = string
-  default     = null
-}
 
 variable "visibility_timeout_seconds" {
   description = "The visibility timeout for the queue. An integer from 0 to 43200 (12 hours)"
@@ -61,12 +56,6 @@ variable "redrive_policy" {
   description = "The JSON policy to set up the Dead Letter Queue, see AWS docs. Note: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")"
   type        = string
   default     = null
-}
-
-variable "redrive_allow_policy" {
-  description = "The JSON policy to set up the Dead Letter Queue redrive permission, see AWS docs."
-  type        = string
-  default     = ""
 }
 
 variable "fifo_queue" {

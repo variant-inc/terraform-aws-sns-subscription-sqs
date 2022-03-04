@@ -21,7 +21,7 @@ data "aws_sns_topic" "topics_to_subscribe" {
 }
 
 
-// sns to sqs publish policies
+#sns to sqs publish policies
 data "aws_iam_policy_document" "topic_subscription_policy" {
   policy_id = "${var.name}-subscription"
   version   = "2012-10-17"
@@ -53,7 +53,7 @@ resource "aws_sqs_queue_policy" "topic_subscription_policy_binding" {
   queue_url = data.aws_sqs_queue.queue_urls.url
 }
 
-// sns to sqs subscription from sns
+#sns to sqs subscription from sns
 resource "aws_sns_topic_subscription" "topic_subscription" {
   topic_arn            = data.aws_sns_topic.topics_to_subscribe.arn
   protocol             = "sqs"
@@ -61,7 +61,8 @@ resource "aws_sns_topic_subscription" "topic_subscription" {
   raw_message_delivery = var.raw_message_delivery
 }
 
-// queue consumer policies
+#queue consumer policies
+# tflint-ignore: terraform_unused_declarations
 data "aws_iam_policy_document" "queue_receive_policy" {
   version = "2012-10-17"
   statement {
