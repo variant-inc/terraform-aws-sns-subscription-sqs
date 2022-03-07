@@ -62,7 +62,6 @@ resource "aws_sns_topic_subscription" "topic_subscription" {
 }
 
 #queue consumer policies
-# tflint-ignore: terraform_unused_declarations
 data "aws_iam_policy_document" "queue_receive_policy" {
   version = "2012-10-17"
   statement {
