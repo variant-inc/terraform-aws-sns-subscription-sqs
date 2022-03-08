@@ -15,7 +15,6 @@ variable "topic_name" {
   default     = null
 }
 
-
 variable "visibility_timeout_seconds" {
   description = "The visibility timeout for the queue. An integer from 0 to 43200 (12 hours)"
   type        = number
@@ -86,4 +85,10 @@ variable "raw_message_delivery" {
   description = "Whether to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property)"
   type        = bool
   default     = false
+}
+
+variable "tags" {
+  description = "A mapping of tags to assign to all resources"
+  type        = map(string)
+  default     = {}
 }

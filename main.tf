@@ -14,6 +14,7 @@ module "sqs_queue" {
   content_based_deduplication       = var.content_based_deduplication
   kms_master_key_id                 = var.kms_key_sns_alias_arn
   kms_data_key_reuse_period_seconds = var.kms_data_key_reuse_period_seconds
+  tags                              = var.tags
 }
 
 data "aws_sns_topic" "topics_to_subscribe" {
