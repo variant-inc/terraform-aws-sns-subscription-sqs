@@ -1,6 +1,7 @@
 data "aws_kms_key" "sns_alias" {
   key_id = "alias/ops/sns"
 }
+
 module "sqs_queue" {
   source                   = "../"
   name                     = var.name
