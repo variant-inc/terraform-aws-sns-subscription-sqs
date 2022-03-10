@@ -21,12 +21,10 @@ data "aws_sns_topic" "topics_to_subscribe" {
   name = var.topic_name
 }
 
-
 #sns to sqs publish policies
 data "aws_iam_policy_document" "topic_subscription_policy" {
   policy_id = "${var.name}-subscription"
   version   = "2012-10-17"
-
   statement {
     effect    = "Allow"
     resources = [module.sqs_queue.this_sqs_queue_arn]
@@ -36,7 +34,6 @@ data "aws_iam_policy_document" "topic_subscription_policy" {
       identifiers = ["*"]
       type        = "*"
     }
-
     condition {
       test     = "ArnEquals"
       values   = [data.aws_sns_topic.topics_to_subscribe.arn]
