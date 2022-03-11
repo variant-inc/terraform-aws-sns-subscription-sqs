@@ -1,8 +1,3 @@
-variable "aws_resource_name_prefix" {
-  type        = string
-  description = "Prefix of team name to be applied to created resources."
-}
-
 variable "name" {
   description = "This is the human-readable name of the queue. If omitted, Terraform will assign a random name."
   type        = string
@@ -15,8 +10,8 @@ variable "tags" {
   default     = {}
 }
 
-variable "topic_name" {
-  description = "Topic to subscribe"
+variable "topic_arn" {
+  description = "Topic arn to subscribe"
   type        = string
   default     = null
 }

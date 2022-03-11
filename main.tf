@@ -2,7 +2,7 @@ module "sqs_queue" {
   source                            = "terraform-aws-modules/sqs/aws"
   version                           = "~> 2.0"
   create                            = true
-  name                              = "${var.aws_resource_name_prefix}${var.name}"
+  name                              = var.name
   fifo_queue                        = var.fifo_queue
   visibility_timeout_seconds        = var.visibility_timeout_seconds
   message_retention_seconds         = var.message_retention_seconds
@@ -12,13 +12,9 @@ module "sqs_queue" {
   policy                            = var.policy
   redrive_policy                    = var.redrive_policy
   content_based_deduplication       = var.content_based_deduplication
-  kms_master_key_id                 = var.kms_key_sns_alias_arn
+  kms_master_key_id                 = var.kms_key_sns_arn
   kms_data_key_reuse_period_seconds = var.kms_data_key_reuse_period_seconds
   tags                              = var.tags
-}
-
-data "aws_sns_topic" "topics_to_subscribe" {
-  name = var.topic_name
 }
 
 #sns to sqs publish policies
@@ -36,7 +32,7 @@ data "aws_iam_policy_document" "topic_subscription_policy" {
     }
     condition {
       test     = "ArnEquals"
-      values   = [data.aws_sns_topic.topics_to_subscribe.arn]
+      values   = [var.topic_arn]
       variable = "aws:SourceArn"
     }
   }
@@ -53,7 +49,7 @@ resource "aws_sqs_queue_policy" "topic_subscription_policy_binding" {
 
 #sns to sqs subscription from sns
 resource "aws_sns_topic_subscription" "topic_subscription" {
-  topic_arn            = data.aws_sns_topic.topics_to_subscribe.arn
+  topic_arn            = var.topic_arn
   protocol             = "sqs"
   endpoint             = module.sqs_queue.this_sqs_queue_arn
   raw_message_delivery = var.raw_message_delivery
@@ -76,7 +72,7 @@ data "aws_iam_policy_document" "queue_receive_policy" {
 
   statement {
     effect    = "Allow"
-    resources = [var.kms_key_sns_alias_arn]
+    resources = [var.kms_key_sns_arn]
     actions = [
       "kms:GenerateDataKey",
       "kms:Decrypt"
