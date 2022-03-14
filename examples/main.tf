@@ -7,7 +7,7 @@ module "sqs_queue" {
   name            = "test-queue-naveen"
   topic_arn       = "arn:aws:sns:us-east-1:acount_number:dpl-test-topic-naveen"
   kms_key_sns_arn = data.aws_kms_key.sns.arn
-  tags = "tags" : {
+  tags = {
     "owner" : "naveen"
   }
 }
