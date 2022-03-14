@@ -1,12 +1,13 @@
-data "aws_kms_key" "sns_alias" {
+data "aws_kms_key" "sns" {
   key_id = "alias/ops/sns"
 }
 
 module "sqs_queue" {
-  source                   = "../"
-  name                     = var.name
-  aws_resource_name_prefix = var.aws_resource_name_prefix
-  topic_name               = var.topic_name
-  kms_key_sns_alias_arn    = data.aws_kms_key.sns_alias.arn
-  tags                     = var.tags
+  source          = "../"
+  name            = "test-queue-naveen"
+  topic_arn       = "arn:aws:sns:us-east-1:acount_number:dpl-test-topic-naveen"
+  kms_key_sns_arn = data.aws_kms_key.sns.arn
+  tags = {
+    "owner" : "naveen"
+  }
 }
