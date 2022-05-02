@@ -87,3 +87,15 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "create_dlq" {
+  description = "Boolean to create DLQ queue"
+  type        = bool
+  default     = false
+}
+
+variable "max_message_receive_count" {
+  description = "Sets maxReceiveCount on the redrive policy for hours of operation"
+  type        = number
+  default     = 2
+}

@@ -5,6 +5,7 @@ data "aws_kms_key" "sns" {
 module "sqs_queue" {
   source          = "../"
   name            = "test-queue-naveen"
+  create_dlq      = true
   topic_arn       = "arn:aws:sns:us-east-1:acount_number:dpl-test-topic-naveen"
   kms_key_sns_arn = data.aws_kms_key.sns.arn
   tags = {
