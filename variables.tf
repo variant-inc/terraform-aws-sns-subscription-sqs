@@ -37,17 +37,11 @@ variable "delay_seconds" {
 variable "receive_wait_time_seconds" {
   description = "The time for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. An integer from 0 to 20 (seconds)"
   type        = number
-  default     = null
+  default     = 2
 }
 
 variable "policy" {
   description = "The JSON policy for the SQS queue"
-  type        = string
-  default     = null
-}
-
-variable "redrive_policy" {
-  description = "The JSON policy to set up the Dead Letter Queue, see AWS docs. Note: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")"
   type        = string
   default     = null
 }
@@ -89,13 +83,7 @@ variable "tags" {
 }
 
 variable "dlq_options" {
-  description = "Boolean to create DLQ queue"
+  description = "Attributes to set to DLQ queue"
   type        = map(string)
   default     = {}
-}
-
-variable "max_message_receive_count" {
-  description = "Sets maxReceiveCount on the redrive policy for hours of operation"
-  type        = number
-  default     = 2
 }
