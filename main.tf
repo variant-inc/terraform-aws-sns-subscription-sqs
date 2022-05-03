@@ -1,11 +1,11 @@
 module "sqs_queue_dlq" {
   source                            = "terraform-aws-modules/sqs/aws"
   version                           = "~> 2.0"
-  create                            = var.create_dlq
+  create                            = length(var.dlq_options) > 0 ? true : false
   name                              = "${var.name}_dlq"
   fifo_queue                        = var.fifo_queue
-  visibility_timeout_seconds        = var.visibility_timeout_seconds
-  message_retention_seconds         = var.message_retention_seconds
+  visibility_timeout_seconds        = lookup(var.dlq_options, "visibility_timeout_seconds", null)
+  message_retention_seconds         = lookup(var.dlq_options, "message_retention_seconds", null)
   max_message_size                  = var.max_message_size
   delay_seconds                     = var.delay_seconds
   receive_wait_time_seconds         = var.receive_wait_time_seconds
@@ -18,9 +18,13 @@ module "sqs_queue_dlq" {
 }
 
 locals {
+  max_message_receive_count = lookup(var.dlq_options, "max_message_receive_count", var.max_message_receive_count)
+}
+
+locals {
   redrive_policy = jsonencode({
     deadLetterTargetArn = module.sqs_queue_dlq.this_sqs_queue_arn
-    maxReceiveCount     = var.max_message_receive_count
+    maxReceiveCount     = local.max_message_receive_count
   })
 }
 
@@ -36,7 +40,7 @@ module "sqs_queue" {
   delay_seconds                     = var.delay_seconds
   receive_wait_time_seconds         = var.receive_wait_time_seconds
   policy                            = var.policy
-  redrive_policy                    = var.create_dlq == true ? local.redrive_policy : var.redrive_policy
+  redrive_policy                    = length(var.dlq_options) > 0 ? local.redrive_policy : null
   content_based_deduplication       = var.content_based_deduplication
   kms_master_key_id                 = var.kms_key_sns_arn
   kms_data_key_reuse_period_seconds = var.kms_data_key_reuse_period_seconds

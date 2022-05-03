@@ -88,10 +88,10 @@ variable "tags" {
   default     = {}
 }
 
-variable "create_dlq" {
+variable "dlq_options" {
   description = "Boolean to create DLQ queue"
-  type        = bool
-  default     = false
+  type        = map(string)
+  default     = {}
 }
 
 variable "max_message_receive_count" {
