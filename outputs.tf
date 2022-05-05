@@ -13,6 +13,11 @@ output "sqs_queue_dlq_arn" {
   value       = module.sqs_queue_dlq.sqs_queue_arn
 }
 
+output "sqs_queue_dlq_name" {
+  description = "The ARN of the SQS DLQ queue"
+  value       = module.sqs_queue_dlq.sqs_queue_name
+}
+
 output "sqs_queue_name" {
   description = "The ARN of the SQS queue"
   value       = module.sqs_queue.sqs_queue_name
