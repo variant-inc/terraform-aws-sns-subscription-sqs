@@ -6,13 +6,13 @@ Terraform module to create AWS SQS queue
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.4.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.22.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 4.4.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 4.22.0 |
 
 ## Modules
 
